@@ -30,7 +30,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.stuypulse.stuylib.math.SLMath;
 
 public class Drivetrain extends SubsystemBase {
-
   final WPI_TalonFX leftFrontMotor = new WPI_TalonFX(Ports.Drivetrain.LEFT_FRONT);
   final WPI_TalonFX leftBackMotor = new WPI_TalonFX(Ports.Drivetrain.LEFT_BACK);
   MotorControllerGroup leftGroup = new MotorControllerGroup(leftFrontMotor, leftBackMotor);
@@ -40,6 +39,7 @@ public class Drivetrain extends SubsystemBase {
   MotorControllerGroup rightGroup = new MotorControllerGroup(rightFrontMotor, rightBackMotor);
 
   DifferentialDrive differentialDrive = new DifferentialDrive(leftGroup, rightGroup);
+  boolean current_limit_enable = Settings.Drivetrain.CURRENT_LIMIT.get();
 
   public DifferentialDriveOdometry odometry;
   public DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(Settings.Drivetrain.TRACK_WIDTH);
@@ -75,7 +75,6 @@ public class Drivetrain extends SubsystemBase {
     rightFrontMotor.config_kD(Settings.Drivetrain.Motion.PID.kSlot, 
                                 Settings.Drivetrain.Motion.PID.kD);
 
-    
     // Config integrated sensors (built-in encoders)
 		leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 10);
 		rightFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 10);
@@ -202,8 +201,6 @@ public class Drivetrain extends SubsystemBase {
 
   // Drives using WPILib Trajectory Velocity Units
   public void tankDriveVelocity(double leftVel, double rightVel){
-    // System.out.println(leftVel + ","+ rightVel);  
-
     double leftFrontNativeVelocity = Conversions.convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(
                                                   leftVel, 
                                                   Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
@@ -214,6 +211,8 @@ public class Drivetrain extends SubsystemBase {
                                                     Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
                                                     true, 
                                                     Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION);
+
+    // System.out.println(leftVel + ","+ rightVel);
 
     // Drive the motors (and their followers) to the velocity
     this.leftFrontMotor.set(ControlMode.Velocity, leftFrontNativeVelocity);
@@ -227,8 +226,6 @@ public class Drivetrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
-
     double leftDistance = Conversions.convertTalonEncoderTicksToMeters(leftFrontMotor.getSelectedSensorPosition(), 
                                                                               Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
                                                                               Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION, 
@@ -239,19 +236,37 @@ public class Drivetrain extends SubsystemBase {
                                                                               true);
     odometry.update(Rotation2d.fromDegrees(getHeading()), leftDistance, rightDistance);
 
+    
     // Create and then set current limits for motors if enabled
-    if(Settings.Drivetrain.CURRENT_LIMIT.get()){
-      SupplyCurrentLimitConfiguration current_limit = 
-        new SupplyCurrentLimitConfiguration(
-          true, 
-          Settings.Drivetrain.MAX_AMP.get(), 
-          Settings.Drivetrain.MAX_AMP.get() + 5, 
-          5.0);
+    if(current_limit_enable != Settings.Drivetrain.CURRENT_LIMIT.get()){
+      current_limit_enable = Settings.Drivetrain.CURRENT_LIMIT.get();
 
-      leftFrontMotor.configSupplyCurrentLimit(current_limit);
-      leftBackMotor.configSupplyCurrentLimit(current_limit);
-      rightFrontMotor.configSupplyCurrentLimit(current_limit);
-      rightBackMotor.configSupplyCurrentLimit(current_limit);
+      if(Settings.Drivetrain.CURRENT_LIMIT.get()){
+        SupplyCurrentLimitConfiguration current_limit = 
+          new SupplyCurrentLimitConfiguration(
+            true, 
+            Settings.Drivetrain.MAX_AMP.get(), 
+            Settings.Drivetrain.MAX_AMP.get() + 5, 
+            5.0);
+
+        leftFrontMotor.configSupplyCurrentLimit(current_limit);
+        leftBackMotor.configSupplyCurrentLimit(current_limit);
+        rightFrontMotor.configSupplyCurrentLimit(current_limit);
+        rightBackMotor.configSupplyCurrentLimit(current_limit);
+      }
+      else{
+        SupplyCurrentLimitConfiguration current_limit = 
+          new SupplyCurrentLimitConfiguration(
+            false, 
+            Settings.Drivetrain.MAX_AMP.get(), 
+            Settings.Drivetrain.MAX_AMP.get() + 5, 
+            5.0);
+
+        leftFrontMotor.configSupplyCurrentLimit(current_limit);
+        leftBackMotor.configSupplyCurrentLimit(current_limit);
+        rightFrontMotor.configSupplyCurrentLimit(current_limit);
+        rightBackMotor.configSupplyCurrentLimit(current_limit);
+      }
     }
   }
 

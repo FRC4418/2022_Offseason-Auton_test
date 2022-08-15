@@ -15,6 +15,7 @@ import frc.robot.constants.Settings;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utills.CustomRamseteControllerAbstraction;
 import frc.robot.commands.DrivetrainDrive;
+import frc.robot.commands.auton.DoNothing;
 import frc.robot.commands.auton.DriveStraight;
 import frc.robot.commands.auton.DriveStraightTurn;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -30,20 +31,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and button mappings) should be declared here.
- */
+
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
   private final Drivetrain drivetrain = new Drivetrain();
 
   public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
   private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+
   public RobotContainer() {
     drivetrain.setDefaultCommand(new DrivetrainDrive(drivetrain, driver));
     
@@ -56,10 +51,12 @@ public class RobotContainer {
 
 
   public void configureAutons() {
-    autonChooser.setDefaultOption("Drive Straight", new DriveStraight(this));
-    autonChooser.setDefaultOption("Drive Straight and Turn", new DriveStraightTurn(this));
+    autonChooser.setDefaultOption("Do Nothing", new DoNothing());
+    autonChooser.addOption("Drive Straight", new DriveStraight(this));
+    autonChooser.addOption("Drive Straight and Turn", new DriveStraightTurn(this));
     SmartDashboard.putData("Autonomous", autonChooser);
   }
+
 
   public Command getAutonomousCommand() {
     return autonChooser.getSelected();
