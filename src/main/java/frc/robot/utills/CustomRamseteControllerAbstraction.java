@@ -4,6 +4,7 @@ import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.constants.Settings;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.Trajectory.State;
 
@@ -67,7 +68,7 @@ public class CustomRamseteControllerAbstraction extends RamseteController{
                 SmartDashboard.putNumber("vY [m/s]", 0.0);
                 SmartDashboard.putNumber("vOmega [rad/s]", omegaRef + k * eTheta + m_b * vRef * sinc(eTheta) * eY);
 
-                SmartDashboard.putNumber("vX [t/100ms]", AutonConversionFactors.convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(vRef * m_poseError.getRotation().getCos() + k * eX, Constants.DTConstants.WHEEL_DIAMETER, false, Constants.DTConstants.TICKS_PER_REV));
+                SmartDashboard.putNumber("vX [t/100ms]", Conversions.convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(vRef * m_poseError.getRotation().getCos() + k * eX, Settings.Drivetrain.Encoders.WHEEL_DIAMETER, false, Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION));
             
                 return new ChassisSpeeds(vRef * m_poseError.getRotation().getCos() + k * eX,
                                          0.0,
