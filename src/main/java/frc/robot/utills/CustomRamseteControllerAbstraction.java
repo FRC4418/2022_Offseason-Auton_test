@@ -47,26 +47,26 @@ public class CustomRamseteControllerAbstraction extends RamseteController{
                 final double vRef = linearVelocityRefMeters;
                 final double omegaRef = angularVelocityRefRadiansPerSecond;
 
-                SmartDashboard.putNumber("Current X", currentPose.getTranslation().getX());
-                SmartDashboard.putNumber("Reference X", poseRef.getTranslation().getX());
+                SmartDashboard.putNumber("Auto Diag/Current X", currentPose.getTranslation().getX());
+                SmartDashboard.putNumber("Auto Diag/Reference X", poseRef.getTranslation().getX());
 
-                SmartDashboard.putNumber("eX", eX);
-                SmartDashboard.putNumber("eY", eY);
-                SmartDashboard.putNumber("eTheta", eTheta);
-                SmartDashboard.putNumber("vRef", vRef);
-                SmartDashboard.putNumber("omegaRef", omegaRef);
+                SmartDashboard.putNumber("Auto Diag/eX", eX);
+                SmartDashboard.putNumber("Auto Diag/eY", eY);
+                SmartDashboard.putNumber("Auto Diag/eTheta", eTheta);
+                SmartDashboard.putNumber("Auto Diag/vRef", vRef);
+                SmartDashboard.putNumber("Auto Diag/omegaRef", omegaRef);
                 
 
             
                 double k = 2.0 * m_zeta * Math.sqrt(Math.pow(omegaRef, 2) + m_b * Math.pow(vRef, 2));
 
-                SmartDashboard.putNumber("k",k);
+                SmartDashboard.putNumber("Auto Diag/k",k);
 
-                SmartDashboard.putNumber("vX [m/s]",vRef * m_poseError.getRotation().getCos() + k * eX);
-                SmartDashboard.putNumber("vY [m/s]", 0.0);
-                SmartDashboard.putNumber("vOmega [rad/s]", omegaRef + k * eTheta + m_b * vRef * sinc(eTheta) * eY);
+                SmartDashboard.putNumber("Auto Diag/vX [m per s]",vRef * m_poseError.getRotation().getCos() + k * eX);
+                SmartDashboard.putNumber("Auto Diag/vY [m per s]", 0.0);
+                SmartDashboard.putNumber("Auto Diag/vOmega [rad per s]", omegaRef + k * eTheta + m_b * vRef * sinc(eTheta) * eY);
 
-                SmartDashboard.putNumber("vX [t/100ms]", Conversions.convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(vRef * m_poseError.getRotation().getCos() + k * eX, Settings.Drivetrain.Encoders.WHEEL_DIAMETER, false, Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION));
+                SmartDashboard.putNumber("Auto Diag/vX [t per 100ms]", Conversions.convertWPILibTrajectoryUnitsToTalonSRXNativeUnits(vRef * m_poseError.getRotation().getCos() + k * eX, Settings.Drivetrain.Encoders.WHEEL_DIAMETER, false, Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION));
             
                 return new ChassisSpeeds(vRef * m_poseError.getRotation().getCos() + k * eX,
                                          0.0,
