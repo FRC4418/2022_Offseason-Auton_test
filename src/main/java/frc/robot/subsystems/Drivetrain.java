@@ -12,6 +12,7 @@ import frc.robot.constants.Settings;
 import frc.robot.constants.Settings.Drivetrain.Encoders;
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.stuypulse.stuylib.math.SLMath;
@@ -38,34 +39,25 @@ public class Drivetrain extends SubsystemBase {
 		leftBackMotor.follow(leftFrontMotor);
 		rightBackMotor.follow(rightFrontMotor);
 
-    // Config closed-loop controls
-    /*
+    // Config closed-loop constants
     leftFrontMotor.config_kF(Settings.Drivetrain.Motion.PID.kSlot, 
-                               Settings.Drivetrain.Motion.PID.kF, 
-                               Settings.Drivetrain.Motion.PID.kTimeoutMs);
-		leftFrontMotor.config_kP(Settings.Drivetrain.Motion.PID.kSlot, 
-                               Settings.Drivetrain.Motion.PID.kP,
-                               Settings.Drivetrain.Motion.PID.kTimeoutMs);
-		leftFrontMotor.config_kI(Settings.Drivetrain.Motion.PID.kSlot, 
-                               Settings.Drivetrain.Motion.PID.kI, 
-                               Settings.Drivetrain.Motion.PID.kTimeoutMs);
+                               Settings.Drivetrain.Motion.PID.kF);
+    leftFrontMotor.config_kP(Settings.Drivetrain.Motion.PID.kSlot, 
+                               Settings.Drivetrain.Motion.PID.kP);
+    leftFrontMotor.config_kI(Settings.Drivetrain.Motion.PID.kSlot, 
+                               Settings.Drivetrain.Motion.PID.kI);
     leftFrontMotor.config_kD(Settings.Drivetrain.Motion.PID.kSlot, 
-                               Settings.Drivetrain.Motion.PID.kD, 
-                               Settings.Drivetrain.Motion.PID.kTimeoutMs);
+                               Settings.Drivetrain.Motion.PID.kD);
 
     rightFrontMotor.config_kF(Settings.Drivetrain.Motion.PID.kSlot, 
-                                Settings.Drivetrain.Motion.PID.kF, 
-                                Settings.Drivetrain.Motion.PID.kTimeoutMs);
+                                Settings.Drivetrain.Motion.PID.kF);
 		rightFrontMotor.config_kP(Settings.Drivetrain.Motion.PID.kSlot, 
-                                Settings.Drivetrain.Motion.PID.kP, 
-                                Settings.Drivetrain.Motion.PID.kTimeoutMs);
+                                Settings.Drivetrain.Motion.PID.kP);
 		rightFrontMotor.config_kI(Settings.Drivetrain.Motion.PID.kSlot, 
-                                Settings.Drivetrain.Motion.PID.kI, 
-                                Settings.Drivetrain.Motion.PID.kTimeoutMs);
+                                Settings.Drivetrain.Motion.PID.kI);
     rightFrontMotor.config_kD(Settings.Drivetrain.Motion.PID.kSlot, 
-                                Settings.Drivetrain.Motion.PID.kD, 
-                                Settings.Drivetrain.Motion.PID.kTimeoutMs);
-		*/
+                                Settings.Drivetrain.Motion.PID.kD);
+
     
     // Config integrated sensors (built-in encoders)
 		leftFrontMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor, 0, 10);
@@ -74,6 +66,10 @@ public class Drivetrain extends SubsystemBase {
 
     leftGroup.setInverted(true);
 		rightGroup.setInverted(false);
+
+    // Set Status Frame Period for lead motors
+    leftFrontMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, Settings.Drivetrain.STATUS_FRAME_PERIOD, Settings.Drivetrain.STATUS_FRAME_TIMEOUT);
+    rightFrontMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, Settings.Drivetrain.STATUS_FRAME_PERIOD, Settings.Drivetrain.STATUS_FRAME_TIMEOUT);
   }
 
 
