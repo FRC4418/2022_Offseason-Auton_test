@@ -1,6 +1,7 @@
 package frc.robot.constants;
 
 
+import com.stuypulse.stuylib.network.SmartBoolean;
 // import com.stuypulse.stuylib.network.SmartBoolean;
 import com.stuypulse.stuylib.network.SmartNumber;
 
@@ -33,8 +34,14 @@ public interface Settings {
         SmartNumber SPEED_FILTER = new SmartNumber("Driver Settings/Speed Filtering", 0.125);
         SmartNumber ANGLE_FILTER = new SmartNumber("Driver Settings/Turn Filtering", 0.005);
 
+        SmartNumber MAX_AMP = new SmartNumber("Driver Settings/Max Amps", 50);
+        SmartBoolean CURRENT_LIMIT = new SmartBoolean("Driver Settings/Current Limit", true);
+
         // Width of the robot
-        double TRACK_WIDTH = Units.inchesToMeters(26.9); // SEAN PROMISED !
+        double TRACK_WIDTH = Units.inchesToMeters(26.9);
+
+        int STATUS_FRAME_PERIOD = 10;
+        int STATUS_FRAME_TIMEOUT = 20;
 
         public interface Motion {
 
@@ -52,7 +59,6 @@ public interface Settings {
                 double kP = 0;
                 double kI = 0;
                 double kD = 0;
-                double kTimeoutMs = 50;
             }
         }
 
@@ -73,7 +79,7 @@ public interface Settings {
             double WHEEL_DIAMETER = Units.inchesToMeters(4);
             double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
 
-            double ENCODER_PULSES_PER_REVOLUTION = 4096;
+            int ENCODER_PULSES_PER_REVOLUTION = 4096;
             double ENCODER_DISTANCE_PER_PULSE =
                     (WHEEL_CIRCUMFERENCE / ENCODER_PULSES_PER_REVOLUTION)
                             * GearRatio.ENCODER_TO_WHEEL;
