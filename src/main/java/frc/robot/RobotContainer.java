@@ -15,7 +15,8 @@ import frc.robot.constants.Settings;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.utills.CustomRamseteControllerAbstraction;
 import frc.robot.commands.DrivetrainDrive;
-
+import frc.robot.commands.auton.DriveStraight;
+import frc.robot.commands.auton.DriveStraightTurn;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,6 +24,8 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 
@@ -37,23 +40,28 @@ public class RobotContainer {
   private final Drivetrain drivetrain = new Drivetrain();
 
   public final Gamepad driver = new AutoGamepad(Ports.Gamepad.DRIVER);
+  private static SendableChooser<Command> autonChooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     drivetrain.setDefaultCommand(new DrivetrainDrive(drivetrain, driver));
+    
     configureButtonBindings();
+    configureAutons();
   }
 
 
   private void configureButtonBindings() {}
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
+
+  public void configureAutons() {
+    autonChooser.setDefaultOption("Drive Straight", new DriveStraight(this));
+    autonChooser.setDefaultOption("Drive Straight and Turn", new DriveStraightTurn(this));
+    SmartDashboard.putData("Autonomous", autonChooser);
+  }
+
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
+    return autonChooser.getSelected();
   }
 
 
