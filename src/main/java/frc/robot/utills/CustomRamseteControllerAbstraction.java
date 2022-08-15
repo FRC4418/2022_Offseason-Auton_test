@@ -6,13 +6,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.constants.Settings;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.Trajectory.State;
 
 
 public class CustomRamseteControllerAbstraction extends RamseteController{
     
     private Pose2d m_poseError;
-    private Pose2d m_poseTolerance;
     private final double m_b;
     private final double m_zeta;
 

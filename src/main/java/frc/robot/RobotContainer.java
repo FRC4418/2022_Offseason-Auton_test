@@ -24,6 +24,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -66,7 +67,8 @@ public class RobotContainer {
 
 
   public Command createAutoNavigationCommand(Pose2d start, List<Translation2d> waypoints, Pose2d end) {
-    System.out.println("Creating Auto Command");
+    System.out.print("Creating Auto Command, start time: ");
+    System.out.println(Timer.getFPGATimestamp());
   
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(Settings.Drivetrain.Motion.FeedForward.kS, Settings.Drivetrain.Motion.FeedForward.kV, Settings.Drivetrain.Motion.FeedForward.kA),
@@ -81,14 +83,16 @@ public class RobotContainer {
   
     // An example trajectory to follow. All units in meters.
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(start, waypoints, end, config);
-    System.out.println("Generated Trajectory");
+    System.out.print("Generated Trajectory, start time: ");
+    System.out.println(Timer.getFPGATimestamp());
     RamseteCommand ramseteCommand = new RamseteCommand(trajectory, this.drivetrain::getPose,
         new CustomRamseteControllerAbstraction(Settings.Drivetrain.Motion.RAMSETE_B, Settings.Drivetrain.Motion.RAMSETE_ZETA),
         Settings.Drivetrain.Motion.KINEMATICS,
         this.drivetrain::tankDriveVelocity, this.drivetrain);
   
     // Run path following command, then stop at the end.
-    System.out.println("Finished Creating Auto Command");
+    System.out.print("Finished Creating Auto Command, end time: ");
+    System.out.println(Timer.getFPGATimestamp());
     return ramseteCommand.andThen(() -> this.drivetrain.stop());
   }
 }
