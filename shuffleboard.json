@@ -122,9 +122,9 @@
       }
     },
     {
-      "title": "Shooter Settings",
+      "title": "Auto Diag",
       "autoPopulate": true,
-      "autoPopulatePrefix": "network_table:///SmartDashboard/Shooter Settings/",
+      "autoPopulatePrefix": "network_table:///SmartDashboard/Auto Diag/",
       "widgetPane": {
         "gridSize": 100.0,
         "showGrid": true,
@@ -132,114 +132,136 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "5,2": {
+          "0,0": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Shooter Settings/Speed Deadband",
-              "_title": "Speed Deadband"
+              "_source0": "network_table:///SmartDashboard/Auto Diag/Current X",
+              "_title": "Current X"
             }
           },
-          "5,3": {
+          "2,0": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Shooter Settings/Speed Power",
-              "_title": "Speed Power"
+              "_source0": "network_table:///SmartDashboard/Auto Diag/Reference X",
+              "_title": "Reference X"
             }
           },
-          "2,1": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Number Slider",
-              "_source0": "network_table:///SmartDashboard/Shooter Settings/Max Speed",
-              "_title": "Max Speed",
-              "Slider Settings/Min": 0.0,
-              "Slider Settings/Max": 1.0,
-              "Slider Settings/Block increment": 0.0625,
-              "Visuals/Display value": true
-            }
-          },
-          "5,1": {
+          "0,2": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Shooter Settings/Speed Filtering",
-              "_title": "Speed Filtering, Low Pass"
+              "_source0": "network_table:///SmartDashboard/Auto Diag/eX",
+              "_title": "eX"
             }
-          }
-        }
-      }
-    },
-    {
-      "title": "Feeder Settings",
-      "autoPopulate": true,
-      "autoPopulatePrefix": "network_table:///SmartDashboard/Feeder Settings/",
-      "widgetPane": {
-        "gridSize": 100.0,
-        "showGrid": true,
-        "hgap": 16.0,
-        "vgap": 16.0,
-        "titleType": 0,
-        "tiles": {
-          "5,2": {
+          },
+          "0,3": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Feeder Settings/Speed Deadband",
-              "_title": "Speed Deadband"
+              "_source0": "network_table:///SmartDashboard/Auto Diag/eY",
+              "_title": "eY"
             }
           },
-          "5,3": {
+          "6,4": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Feeder Settings/Speed Power",
-              "_title": "Speed Power"
+              "_source0": "network_table:///SmartDashboard/Auto Diag/vOmega [rad per s]",
+              "_title": "vOmega [rad per s]"
             }
           },
-          "2,1": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Number Slider",
-              "_source0": "network_table:///SmartDashboard/Feeder Settings/Max Speed",
-              "_title": "Max Speed",
-              "Slider Settings/Min": 0.0,
-              "Slider Settings/Max": 1.0,
-              "Slider Settings/Block increment": 0.0625,
-              "Visuals/Display value": true
-            }
-          },
-          "5,1": {
+          "0,4": {
             "size": [
               2,
               1
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Feeder Settings/Speed Filtering",
-              "_title": "Speed Filtering, Low Pass"
+              "_source0": "network_table:///SmartDashboard/Auto Diag/eTheta",
+              "_title": "eTheta"
+            }
+          },
+          "3,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/vRef",
+              "_title": "vRef"
+            }
+          },
+          "3,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/omegaRef",
+              "_title": "omegaRef"
+            }
+          },
+          "6,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/k",
+              "_title": "k"
+            }
+          },
+          "6,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/vX [m per s]",
+              "_title": "vX [m per s]"
+            }
+          },
+          "6,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/vY [m per s]",
+              "_title": "vY [m per s]"
+            }
+          },
+          "8,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/vX [t per 100ms]",
+              "_title": "vX [t per 100ms]"
             }
           }
         }
@@ -247,9 +269,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -4.5714287757873535,
-    "y": 1.7142857313156128,
-    "width": 1469.7142333984375,
-    "height": 581.7142944335938
+    "x": 2050.0,
+    "y": 94.0,
+    "width": 1520.0,
+    "height": 799.0
   }
 }
