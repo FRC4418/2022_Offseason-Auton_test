@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -45,6 +46,8 @@ public class Drivetrain extends SubsystemBase {
   public DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(Settings.Drivetrain.TRACK_WIDTH);
 
   public ADIS16448_IMU imu = new ADIS16448_IMU();
+
+  private final Field2d field = new Field2d();
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -96,6 +99,7 @@ public class Drivetrain extends SubsystemBase {
 
     // Create odometry object to keep track of position
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    SmartDashboard.putData("Odometry/Field", field);
   }
 
 
@@ -235,6 +239,14 @@ public class Drivetrain extends SubsystemBase {
                                                                               Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION, 
                                                                               true);
     odometry.update(Rotation2d.fromDegrees(getHeading()), leftDistance, rightDistance);
+
+    // Add pose and gyro data to shuffleboard
+    field.setRobotPose(odometry.getPoseMeters());
+    SmartDashboard.putNumber("Odometry/Gyro", imu.getAngle());
+    SmartDashboard.putNumber("Odometry/Pose X", odometry.getPoseMeters().getX());
+    SmartDashboard.putNumber("Odometry/Pose Y", odometry.getPoseMeters().getY());
+    SmartDashboard.putNumber("Odometry/Pose Rotation", odometry.getPoseMeters().getRotation().getDegrees());
+
 
     
     // Create and then set current limits for motors if enabled

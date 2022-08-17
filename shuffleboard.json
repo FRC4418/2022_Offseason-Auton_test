@@ -266,6 +266,82 @@
           }
         }
       }
+    },
+    {
+      "title": "Odometry",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "network_table:///SmartDashboard/Odometry/",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              4,
+              3
+            ],
+            "content": {
+              "_type": "Field",
+              "_source0": "network_table:///SmartDashboard/Odometry/Field",
+              "_title": "Field",
+              "Game/Game": "A2022_Rapid_React",
+              "Visuals/Robot Icon Size": 100.0,
+              "Visuals/Show Outside Circles": true
+            }
+          },
+          "7,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Gyro",
+              "_source0": "network_table:///SmartDashboard/Odometry/Gyro",
+              "_title": "Gyro",
+              "Visuals/Major tick spacing": 45.0,
+              "Visuals/Starting angle": 180.0,
+              "Visuals/Show tick mark ring": true,
+              "Visuals/Counter clockwise": false
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Odometry/Pose X",
+              "_title": "Pose X"
+            }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Odometry/Pose Y",
+              "_title": "Pose Y"
+            }
+          },
+          "4,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Odometry/Pose Rotation",
+              "_title": "Pose Rotation"
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
