@@ -16,11 +16,4 @@ public interface Ports {
         int RIGHT_FRONT = 4;
         int RIGHT_BACK = 5;
     }
-
-    public interface Shooter {
-        // Motors
-        int TOP = 15;
-        int BOTTOM = 1;
-        int FEEDER = 11;
-    }
 }
