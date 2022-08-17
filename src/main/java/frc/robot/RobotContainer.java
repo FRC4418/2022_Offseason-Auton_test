@@ -54,7 +54,7 @@ public class RobotContainer {
     autonChooser.setDefaultOption("Do Nothing", new DoNothing());
     autonChooser.addOption("Drive Straight", new DriveStraight(this));
     autonChooser.addOption("Drive Straight and Turn", new DriveStraightTurn(this));
-    SmartDashboard.putData("Autonomous", autonChooser);
+    SmartDashboard.putData("Driver Settings/Auto Chooser", autonChooser);
   }
 
 

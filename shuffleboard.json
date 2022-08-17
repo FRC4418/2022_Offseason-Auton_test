@@ -117,6 +117,16 @@
               "Slider Settings/Block increment": 0.0625,
               "Visuals/Display value": true
             }
+          },
+          "9,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_title": "Auto Chooser"
+            }
           }
         }
       }
@@ -285,7 +295,7 @@
             ],
             "content": {
               "_type": "Field",
-              "_source0": "network_table:///SmartDashboard/Odometry/Field",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/Field",
               "_title": "Field",
               "Game/Game": "A2022_Rapid_React",
               "Visuals/Robot Icon Size": 100.0,
@@ -299,7 +309,7 @@
             ],
             "content": {
               "_type": "Gyro",
-              "_source0": "network_table:///SmartDashboard/Odometry/Gyro",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/Gyro",
               "_title": "Gyro",
               "Visuals/Major tick spacing": 45.0,
               "Visuals/Starting angle": 180.0,
@@ -314,7 +324,7 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Odometry/Pose X",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/Pose X",
               "_title": "Pose X"
             }
           },
@@ -325,7 +335,7 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Odometry/Pose Y",
+              "_source0": "network_table:///SmartDashboard/Auto Diag/Pose Y",
               "_title": "Pose Y"
             }
           },
@@ -336,7 +346,6 @@
             ],
             "content": {
               "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Odometry/Pose Rotation",
               "_title": "Pose Rotation"
             }
           }
