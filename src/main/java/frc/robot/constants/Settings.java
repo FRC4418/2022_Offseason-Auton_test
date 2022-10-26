@@ -27,8 +27,8 @@ public interface Settings {
         
         SmartNumber MAX_SPEED_ANGLE = new SmartNumber("Driver Settings/Max Speed Angle", 0.5);
         SmartNumber MAX_SPEED = new SmartNumber("Driver Settings/Max Speed", 0.5);
-        double MAX_SPEED_AUTON = 7;
-        double MAX_ACCEL_AUTON = 0.25;
+        double MAX_SPEED_AUTON = 1;
+        double MAX_ACCEL_AUTON = 0.1;
 
         SmartNumber SPEED_POWER = new SmartNumber("Driver Settings/Speed Power", 2.0);
         SmartNumber ANGLE_POWER = new SmartNumber("Driver Settings/Turn Power", 1.0);
@@ -51,11 +51,12 @@ public interface Settings {
 
             double RAMSETE_B = 2.0;     // From WPILib Docs
             double RAMSETE_ZETA = 0.7;  // From WPILib Docs
-
+            
             public interface FeedForward {
-                double kS = 0.20094;
-                double kV = 1.6658;
-                double kA = 0.4515;
+                double kS = 0.66871;
+                double kV = 1.989;
+                double kA = 0.61067;
+                //public static final double kPDriveVel = ?;
             }
 
             public interface PID {

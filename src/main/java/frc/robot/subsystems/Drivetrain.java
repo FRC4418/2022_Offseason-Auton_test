@@ -221,6 +221,7 @@ public class Drivetrain extends SubsystemBase {
     // Drive the motors (and their followers) to the velocity
     this.leftFrontMotor.set(ControlMode.Velocity, leftFrontNativeVelocity);
     this.rightFrontMotor.set(ControlMode.Velocity, rightFrontNativeVelocity);
+    
 
     // Print the setpoint and error to the dashboard
     SmartDashboard.putNumber("Auton/Left Velocity Setpoint", leftFrontNativeVelocity);

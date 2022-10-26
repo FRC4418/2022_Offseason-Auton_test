@@ -14,7 +14,7 @@ import frc.robot.RobotContainer;
 
 public class DriveStraight extends SequentialCommandGroup {
   Pose2d start = new Pose2d(0,0,new Rotation2d(0));
-
+  //create new waypoints here
   List<Translation2d> waypoints = List.of(
                                     new Translation2d(1,0.0)
                                     // new Translation2d(5,1),
