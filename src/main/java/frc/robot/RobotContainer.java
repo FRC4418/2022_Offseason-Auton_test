@@ -41,7 +41,7 @@ public class RobotContainer {
 
   public RobotContainer() {
     drivetrain.setDefaultCommand(new DrivetrainDrive(drivetrain, driver));
-    
+    System.out.println("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest");
     configureButtonBindings();
     configureAutons();
   }
@@ -51,8 +51,9 @@ public class RobotContainer {
 
 
   public void configureAutons() {
-    autonChooser.setDefaultOption("Do Nothing", new DoNothing());
-    autonChooser.addOption("Drive Straight", new DriveStraight(this));
+    autonChooser.setDefaultOption("Drive Straight", new DoNothing());
+    //switch back to correct default
+    autonChooser.addOption("Do Nothing", new DriveStraight(this));
     autonChooser.addOption("Drive Straight and Turn", new DriveStraightTurn(this));
     SmartDashboard.putData("Driver Settings/Auto Chooser", autonChooser);
   }
@@ -63,14 +64,15 @@ public class RobotContainer {
   }
 
 
+
   public Command createAutoNavigationCommand(Pose2d start, List<Translation2d> waypoints, Pose2d end) {
     System.out.print("Creating Auto Command, start time: ");
     System.out.println(Timer.getFPGATimestamp());
-  
+  //return getAutonomousCommand(); 
     var autoVoltageConstraint = new DifferentialDriveVoltageConstraint(
         new SimpleMotorFeedforward(Settings.Drivetrain.Motion.FeedForward.kS, Settings.Drivetrain.Motion.FeedForward.kV, Settings.Drivetrain.Motion.FeedForward.kA),
         Settings.Drivetrain.Motion.KINEMATICS, 10);
-  
+  System.out.println("autoVoltageConstraint complete");
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(Settings.Drivetrain.MAX_SPEED_AUTON, Settings.Drivetrain.MAX_ACCEL_AUTON)
         // Add kinematics to ensure max speed is actually obeyed
