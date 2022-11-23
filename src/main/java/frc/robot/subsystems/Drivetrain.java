@@ -92,10 +92,10 @@ public class Drivetrain extends SubsystemBase {
     rightFrontMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, Settings.Drivetrain.STATUS_FRAME_PERIOD, Settings.Drivetrain.STATUS_FRAME_TIMEOUT);
 
     // Set the motors to brake while idle
-    leftFrontMotor.setNeutralMode(NeutralMode.Brake);
-    rightFrontMotor.setNeutralMode(NeutralMode.Brake);
-    leftBackMotor.setNeutralMode(NeutralMode.Brake);
-    rightBackMotor.setNeutralMode(NeutralMode.Brake);
+    leftFrontMotor.setNeutralMode(NeutralMode.Coast);
+    rightFrontMotor.setNeutralMode(NeutralMode.Coast);
+    leftBackMotor.setNeutralMode(NeutralMode.Coast);
+    rightBackMotor.setNeutralMode(NeutralMode.Coast);
 
     // Create odometry object to keep track of position
     odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));

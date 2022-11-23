@@ -20,6 +20,7 @@ import frc.robot.commands.auton.DriveStraight;
 import frc.robot.commands.auton.DriveStraightTurn;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
@@ -60,7 +61,15 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-    return autonChooser.getSelected();
+    // An ExampleCommand will run in autonomous
+    Pose2d start = new Pose2d(0,0,new Rotation2d(0));
+    List<Translation2d> waypoints = List.of(
+      new Translation2d(1,0),
+      new Translation2d(2,0)
+
+    );
+    Pose2d end = new Pose2d(7, 0, Rotation2d.fromDegrees(-90));
+    return this.createAutoNavigationCommand(start, waypoints, end);
   }
 
 
@@ -79,6 +88,7 @@ public class RobotContainer {
         .setKinematics(Settings.Drivetrain.Motion.KINEMATICS)
         // Apply the voltage constraint
         .addConstraint(autoVoltageConstraint);
+
   
     // An example trajectory to follow. All units in meters.
     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(start, waypoints, end, config);
@@ -86,8 +96,7 @@ public class RobotContainer {
     System.out.println(Timer.getFPGATimestamp());
     RamseteCommand ramseteCommand = new RamseteCommand(trajectory, this.drivetrain::getPose,
         new CustomRamseteControllerAbstraction(Settings.Drivetrain.Motion.RAMSETE_B, Settings.Drivetrain.Motion.RAMSETE_ZETA),
-        Settings.Drivetrain.Motion.KINEMATICS,
-        this.drivetrain::tankDriveVelocity, this.drivetrain);
+        Settings.Drivetrain.Motion.KINEMATICS, this.drivetrain::tankDriveVelocity, this.drivetrain);
   
     // Run path following command, then stop at the end.
     System.out.print("Finished Creating Auto Command, end time: ");

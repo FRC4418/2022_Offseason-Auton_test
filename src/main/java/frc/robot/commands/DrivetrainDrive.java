@@ -41,7 +41,6 @@ public class DrivetrainDrive extends CommandBase {
                             new LowPassFilter(Settings.Drivetrain.ANGLE_FILTER));
 
     addRequirements(drivetrain);
-
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

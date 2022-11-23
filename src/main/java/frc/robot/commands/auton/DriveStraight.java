@@ -27,7 +27,7 @@ public class DriveStraight extends SequentialCommandGroup {
   public DriveStraight(RobotContainer robot) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new WaitCommand(5));
+    //addCommands(new WaitCommand(5));
     addCommands(robot.createAutoNavigationCommand(start, waypoints, end));
   }
 }
