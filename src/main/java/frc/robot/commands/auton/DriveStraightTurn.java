@@ -28,6 +28,7 @@ public class DriveStraightTurn extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(new WaitCommand(1));
-    addCommands(robot.createAutoNavigationCommand(start, waypoints, end));
+    // TODO Mihai
+    // addCommands(robot.createAutoNavigationCommand(start, waypoints, end));
   }
 }

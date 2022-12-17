@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -48,6 +49,8 @@ public class Drivetrain extends SubsystemBase {
   public ADIS16448_IMU imu = new ADIS16448_IMU();
 
   private final Field2d field = new Field2d();
+  private final Encoder m_leftEncoder = new Encoder(0, 1);
+  private final Encoder m_rightEncoder = new Encoder(2, 3);
 
   /** Creates a new Drivetrain. */
   public Drivetrain() {
@@ -102,7 +105,6 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putData("Odometry/Field", field);
   }
 
-
 	// Encoder methods
   public double getLeftDistance() {
 		return leftFrontMotor.getSelectedSensorPosition() * Settings.Drivetrain.Encoders.ENCODER_DISTANCE_PER_PULSE;
@@ -127,6 +129,16 @@ public class Drivetrain extends SubsystemBase {
     return odometry.getPoseMeters();
   }
 
+  public void tankDriveVolts(double leftVolts, double rightVolts) {
+    leftGroup.setVoltage(leftVolts);
+    rightGroup.setVoltage(rightVolts);
+    differentialDrive.feed();
+  }
+
+  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+    return new DifferentialDriveWheelSpeeds(m_leftEncoder.getRate(), m_rightEncoder.getRate());
+  }
+
   public void resetOdometry(Pose2d pose){
     resetEncoders();
     odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
@@ -145,19 +157,19 @@ public class Drivetrain extends SubsystemBase {
     return imu.getRate();
   }
 
-  public DifferentialDriveWheelSpeeds getWheelSpeeds(){
-    return new DifferentialDriveWheelSpeeds(
-                  Conversions.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(
-                    this.leftFrontMotor.getSelectedSensorVelocity(), 
-                    Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
-                    true, 
-                    Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION), 
-                  Conversions.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(
-                    this.rightFrontMotor.getSelectedSensorVelocity(), 
-                    Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
-                    true, 
-                    Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION));
-  }
+  // public DifferentialDriveWheelSpeeds getWheelSpeeds(){
+  //   return new DifferentialDriveWheelSpeeds(
+  //                 Conversions.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(
+  //                   this.leftFrontMotor.getSelectedSensorVelocity(), 
+  //                   Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
+  //                   true, 
+  //                   Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION), 
+  //                 Conversions.convertTalonSRXNativeUnitsToWPILibTrajecoryUnits(
+  //                   this.rightFrontMotor.getSelectedSensorVelocity(), 
+  //                   Settings.Drivetrain.Encoders.WHEEL_DIAMETER, 
+  //                   true, 
+  //                   Settings.Drivetrain.Encoders.ENCODER_PULSES_PER_REVOLUTION));
+  // }
 
 
   // Motor control methods

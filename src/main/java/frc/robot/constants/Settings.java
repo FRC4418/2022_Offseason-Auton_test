@@ -27,6 +27,7 @@ public interface Settings {
         
         SmartNumber MAX_SPEED_ANGLE = new SmartNumber("Driver Settings/Max Speed Angle", 0.5);
         SmartNumber MAX_SPEED = new SmartNumber("Driver Settings/Max Speed", 0.5);
+        
         double MAX_SPEED_AUTON = 2;
         double MAX_ACCEL_AUTON = 0.5;
 
