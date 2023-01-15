@@ -31,6 +31,8 @@ import java.util.List;
 
 import com.kauailabs.navx.frc.AHRS;
 
+//import com.kauailabs.navx.frc.AHRS;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,7 +43,7 @@ import com.kauailabs.navx.frc.AHRS;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final AHRS ahrs = new AHRS();
+
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -111,7 +113,7 @@ public class RobotContainer {
             List.of(new Translation2d(0.25, 0), new Translation2d(0.4, 0)),
             // End 3 meters straight ahead of where we started, facing forward
             //A 1 MEANS 10 METERS, DO MATH
-            new Pose2d(0.6, 0, new Rotation2d(30)),
+            new Pose2d(0.6, 0, new Rotation2d(1.57)),
             // Pass config
             config);
 
@@ -119,7 +121,7 @@ public class RobotContainer {
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(
-            exampleTrajectory,
+            Robot.trajectory,
             m_robotDrive::getPose,
             new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
             new SimpleMotorFeedforward(
@@ -135,7 +137,7 @@ public class RobotContainer {
             m_robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+    m_robotDrive.resetOdometry(Robot.trajectory.getInitialPose());
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
