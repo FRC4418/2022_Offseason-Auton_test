@@ -29,6 +29,9 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import java.util.List;
 
+import com.kauailabs.navx.frc.AHRS;
+
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -38,6 +41,7 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final AHRS ahrs = new AHRS();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -104,10 +108,10 @@ public class RobotContainer {
             // Start at the origin facing the +X direction
             new Pose2d(0, 0, new Rotation2d(0)),
             // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(0.25, 0), new Translation2d(0.5, 0)),
+            List.of(new Translation2d(0.25, 0), new Translation2d(0.4, 0)),
             // End 3 meters straight ahead of where we started, facing forward
             //A 1 MEANS 10 METERS, DO MATH
-            new Pose2d(0.5, 0, new Rotation2d(0)),
+            new Pose2d(0.6, 0, new Rotation2d(30)),
             // Pass config
             config);
 
@@ -115,7 +119,7 @@ public class RobotContainer {
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(
-            Robot.trajectory,
+            exampleTrajectory,
             m_robotDrive::getPose,
             new RamseteController(AutoConstants.kRamseteB, AutoConstants.kRamseteZeta),
             new SimpleMotorFeedforward(
@@ -131,7 +135,7 @@ public class RobotContainer {
             m_robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(Robot.trajectory.getInitialPose());
+    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> m_robotDrive.tankDriveVolts(0, 0));
